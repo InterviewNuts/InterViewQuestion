@@ -1,2 +1,70 @@
 //! Interview Questions
 --------------------------
+https://gdpi.hitbullseye.com/nutanix/nutanix-interview-questions.php
+
+Company : Nutanix
+----------------
+1)
+Given a binary tree and a number X, find all the nodes at a distance X from root and 
+all the nodes at a distance X from leaf nodes.
+
+2)
+Given an array of integers and an integer X. Find all subsets of the array whose sum of elements 
+is equal to the integer X.
+
+3)You have two integer arrays – WELL and DISC. Each integer of WELL represents the maximum width 
+of a disc that can pass through it in left to right direction. Given a series of discs of 
+varying width, find out how many discs can be fit in the WELL until the WELL gets full.
+
+4)
+You have an array of numbers. You have to give the range in which each number is the maximum element. 
+For example, if the array is 1, 5, 4, 3, 6. The output would be:
+1 [1, 1]
+5 [1, 4]
+4 [3, 4]
+3 [4, 4]
+6 [1, 5]
+
+
+5) DELL
+
+Give me the code of in-order recursive and non-recursive.
+
+How would you sort words in a large file?
+
+Explain the T9 Dictionary.
+
+What is the Insertion Sort Code?.
+
+If you have to store one lakh objects, what will be a better option- a hash map or an array list?
+
+Give us a program to reverse a linked list.
+
+Write a program to reverse a linked list.
+
+What is meant by "bit masking"?
+
+Explain“structure padding”?
+
+What is“platform independence”?
+
+How would you check if a binary tree is BST or not ? Write a program.
+
+How is final different from finally and finalize()?
+
+Write an algorithm to check if there is a loop in a doubly linked list.
+
+What is better – “bit-shift a value” or“multiply by 2”?
+
+How would you swap the Kth node from beginning with Kth node from end in a Linked List.
+
+
+Tell me a few examples of final classes defined in Java API?
+
+I want to print "Hello" even before main() is executed. How will you achieve that?
+
+
+What do you mean by abstract classes?
+
+
+

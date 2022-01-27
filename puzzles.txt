@@ -1,0 +1,99 @@
+Link:
+https://www.ambitionbox.com/interviews/nutanix-interview-questions
+
+https://www.geeksforgeeks.org/puzzles/?ref=shm
+
+
+Q1. Minimum Number of Platforms
+You have been given two arrays, 'AT' and 'DT', representing the arrival and departure times 
+of all trains that reach a railway station.
+Your task is to find the minimum number of platforms required for the railway station 
+so that no train needs to wait.
+
+Q2.
+
+You are given a string ‘str’ of ‘N’ lowercase alphabets. Your task is to check whether it is possible 
+to split the given string into three non-empty substrings such that one of them is a 
+substring of another two.
+For example:
+‘str’ = 'abcabab', we can split this string into 3 string a, b, c as a = 'abc', b = 'ab', c = 'abc', 
+we can clearly see that b is a substring of both a and c.
+
+Q3) Reverse Edges
+You are given a directed graph of ‘N’ nodes and ‘M’ edges. Also, you have two nodes ‘A’ and ‘B’. 
+Your task is to make at least one valid path from ‘A’ to ‘B’ by doing the below operations a 
+minimum number of times.
+Choose two nodes ‘X’ and ‘Y’, such that there exists an edge from ‘X’ to ‘Y’. 
+Delete edge ‘X’ to ‘Y’. Add edge ‘Y’ to ‘X’.
+You need to print the minimum operations that you have done.
+
+Input Format
+The first line of input contains an integer 'T' representing the number of test cases. 
+The first line of each test case contains two space-separated integers ‘N’ and ‘M’ where ‘N’ 
+denotes the total number of nodes and ‘M’ denotes the total number of edges in the graph. 
+The second line of each test case contains two space-separated integers ‘X’ and ‘Y’ where ‘X’ 
+denotes the starting node of the path and ‘Y’ denotes the ending node of the path. The next ‘M’ 
+lines contain two space-separated integers ‘U’ and ‘V’ where ‘U’ and ‘V’ represent the nodes that 
+share an edge from ‘U’ to ‘V’.
+
+Q4. Lexicographic Permutation Rank
+Ninja got holiday homework from his English teacher. His teacher gave him a string and told him to 
+find the rank of the string if the string is sorted in lexicographical order.
+Ninja is very new into programming, he didn’t know how to solve this question but he has to solve 
+this question as this question has a very heavy weightage among all the questions given in holiday 
+
+homework.
+Ninja knows that you are a very good programmer who has practiced a lot of questions. Help Ninja!.
+
+Q5. Ninja And Stack Of Boxes
+Ninja has been given ‘N’ rectangular 3-D ‘BOXES’. Each box has dimensions Length ‘L’, Breadth ‘B’ and 
+Height ‘H’. Ninja has to create a stack of boxes as tall as possible. But there is a condition to do so.
+You can only place a box on top of another box only if the dimensions of the 2-D base of the lower 
+box are each strictly larger than those of the 2-D base of the higher box. You can rotate any box 
+so that any side of the box is used as a base. You can take multiple instances of any box.
+Can you help the Ninja to create a stack of boxes as tall as possible?.
+
+Puzzle 1 | Measure 45 minutes using two identical wires
+Puzzle 2 | (Find ages of daughters)
+Puzzle 3 | (Calculate total distance travelled by bee)
+Puzzle 4 | (Pay an employee using a 7 units gold rod)
+Puzzle 5 | (Finding the poisoned wine)
+Puzzle 6 | (Monty Hall problem)
+Puzzle 7 | (3 Bulbs and 3 Switches)
+Puzzle 8 | (Find the Jar with contaminated pills)
+Puzzle 9 | (Find the fastest 3 horses)
+Puzzle 10 | (A Man with Medical Condition and 2 Pills)
+Puzzle 11 | (1000 Coins and 10 Bags)
+Puzzle 12 | (Maximize probability of White Ball)
+Puzzle 13 | (100 Prisoners with Red/Black Hats)
+Puzzle 14 | (Strategy for a 2 Player Coin Game)
+Puzzle 15 | (Camel and Banana Puzzle)
+Puzzle 16 | (100 Doors)
+Puzzle 17 | (Ratio of Boys and Girls in a Country where people want only boys)
+Puzzle 18 | (Torch and Bridge)
+Puzzle 19 | (Poison and Rat)
+Puzzle 20 | (5 Pirates and 100 Gold Coins)
+Puzzle 21 | (3 Ants and Triangle)
+Puzzle 22 | (Maximum Chocolates)
+Puzzle 23 | (Days of month using 2 dice)
+Puzzle 24 | (10 Coins Puzzle)
+Puzzle 25 | (Chessboard and dominos)
+Puzzle 26 | (Know Average Salary without Disclosing Individual Salaries)
+Puzzle 27 | (Hourglasses Puzzle)
+Puzzle 28 | (Newspaper Puzzle)
+Puzzle 29 | (Car Wheel Puzzle)
+Puzzle 30 | (Last Palindrome Date Before 10/02/2001)
+Puzzle 31 | (Minimum cut Puzzle)
+Puzzle 32| (Completion of Task)
+Puzzle 33 | ( Rs 500 Note Puzzle )
+Puzzle 34 | (Prisoner and Policeman Puzzle)
+Puzzle | Set 35 (2 Eggs and 100 Floors)
+Puzzle 36 | (Matchstick Puzzle)
+Puzzle 37 | (Maximum run in cricket)
+Puzzle 38 | (Tic Tac Toe Puzzle)
+Puzzle 39 | (100 coins puzzle)
+Puzzle 40 | (Find missing Row in Excel)
+Puzzle 41 | (Guess Color of Hat)
+Puzzle 42 | (Placing the numbers)
+Puzzle 43 | Muddy Heads
+Puzzle 44 | Girl or Boy
