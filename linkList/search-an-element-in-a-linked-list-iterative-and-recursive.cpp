@@ -98,4 +98,5 @@ int main()
     Node* t = head;
     cout << t->data << "\n";
     search_recursive(head, 33) ? cout << "Yes" : cout << "No";
+    cout<<search_recursive(head, 33);
 }
