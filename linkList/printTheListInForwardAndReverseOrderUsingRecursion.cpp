@@ -1,3 +1,14 @@
+/**
+ * @file printTheListInForwardAndReverseOrderUsingRecursion.cpp
+ * @author your name (you@domain.com)
+ * @brief
+ * @version 0.1git push
+ * 
+ * @date 2022-02-08
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include<iostream>
 using namespace std;
 
@@ -30,7 +41,7 @@ Node* insert(Node* head, int data)
         }
         temp1->next = temp;
     }
-return head;
+    return head;
 }
 
 void printList(Node* head)
