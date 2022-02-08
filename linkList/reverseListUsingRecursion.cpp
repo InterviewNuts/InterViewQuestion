@@ -1,14 +1,3 @@
-/**
- * @file printTheListInForwardAndReverseOrderUsingRecursion.cpp
- * @author your name (you@domain.com)
- * @brief
- * @version 0.1git push
- *
- * @date 2022-02-08
- *
- * @copyright Copyright (c) 2022
- *
- */
 #include<iostream>
 using namespace std;
 
@@ -58,6 +47,7 @@ void printListForward(Node* head)
 
 void printListReverse(Node* head)
 {
+
     if (head == nullptr) {
         cout << "\n";
         return;
@@ -69,6 +59,19 @@ void printListReverse(Node* head)
 
 }
 
+Node* start;
+void reverseList(Node* p)
+{
+    if (p->next == nullptr)
+    {
+        start = p;
+        return;
+    }
+    reverseList(p->next);
+    Node* t = p->next;
+    t->next = p;
+    p->next = nullptr;
+}
 
 int main()
 {
@@ -78,5 +81,13 @@ int main()
     head = insert(head, 110);
     head = insert(head, 102);
     head = insert(head, 1011);
+ start=head;
     printListForward(head);
+    cout << " after reversal \n";
+    head = start;
+    reverseList(head);
+    head = start;
+    printListForward(head);
+
+
 }
