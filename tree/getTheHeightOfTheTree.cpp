@@ -108,10 +108,14 @@ int main()
     Tree* rootTree = new Tree();
 
     Node* r = rootTree->createTree(rootTree->getRoot(), 50);
-    r = rootTree->createTree(r, 60);
-    r = rootTree->createTree(r, 40);
-    r = rootTree->createTree(r, 20);
-    r = rootTree->createTree(r, 80);
+    r = rootTree->createTree(r, 4);
+    r = rootTree->createTree(r, 3);
+    r = rootTree->createTree(r, 2);
+    r = rootTree->createTree(r, 1);
+    // r = rootTree->createTree(r, 60);
+    // r = rootTree->createTree(r, 40);
+    // r = rootTree->createTree(r, 20);
+    // r = rootTree->createTree(r, 80);
     // r = rootTree->createTree(r, 45);
     // r = rootTree->createTree(r, 55);
 
