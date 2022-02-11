@@ -42,6 +42,7 @@ int Tree::heightOfTheTree(Node* p)
     int left = heightOfTheTree(p->lChild);
     int right = heightOfTheTree(p->rChild);
     int h;
+	// return max( left,right)+1;
     if (left > right)
     {
         h = 1 + left;

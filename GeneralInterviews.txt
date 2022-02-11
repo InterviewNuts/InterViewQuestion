@@ -67,4 +67,4 @@ I want to print "Hello" even before main() is executed. How will you achieve tha
 What do you mean by abstract classes?
 
 
-
+Q1. Link up all nodes present in same level of BST using next pointer

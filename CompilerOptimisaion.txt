@@ -1,0 +1,213 @@
+Selecting optimization options
+===============================
+Arm Compiler performs several optimizations to reduce the code size and improve the performance of your 
+application. There are different optimization levels which have different optimization goals. 
+Therefore optimizing for a certain goal has an impact on the other goals. 
+Optimization levels are always a trade-off between these different goals.
+
+Arm Compiler provides various optimization levels to control the different optimization goals. 
+The best optimization level for your application depends on your application and optimization goal.
+
+								Table Optimization goals
+								=========================
+|=========================================================|================================|
+|Optimization goal 										  |	Useful optimization levels     |
+|=========================================================|================================|
+|Smaller code size										  |-Oz, -Omin                      |
+|Faster performance										  |-O2, -O3, -Ofast, -Omax         |
+|Good debug experience without code bloat    			  |-O1                             |
+|Better correlation between source code and generated code|-O0 (no optimization)		   |					|
+|Faster compile and build time							  |-O0 (no optimization)		   |
+|Balanced code size reduction and fast performance		  |-Os						       |				
+|==========================================================================================|
+
+
+If you use a higher optimization level for performance, it has a higher impact on the other goals 
+such as degraded debug experience, increased code size, and increased build time.
+If your optimization goal is code size reduction, it has an impact on the other goals such as 
+degraded debug experience, slower performance, and increased build time.
+
+armclang provides a range of options to help you find a suitable approach for your requirements. 
+Consider whether code size reduction or faster performance is the goal which matters most 
+for your application, and then choose an option which matches your goal.
+
+Optimization level -O0
+=======================
+-O0 disables all optimizations. This optimization level is the default. 
+Using -O0 results in a faster compilation and build time, but produces slower code than the 
+other optimization levels. Code size and stack usage are significantly higher at 
+-O0 than at other optimization levels. The generated code closely correlates to the source code, 
+but significantly more code is generated, including dead code.
+
+Optimization level -O1
+======================
+-O1 enables the core optimizations in the compiler. 
+This optimization level provides a good debug experience with better code quality than -O0. 
+Also the stack usage is improved over -O0. Arm recommends this option for a good debug experience.
+
+The differences when using -O1, as compared to -O0 are:
+========================================================
+
+Optimizations are enabled, which might reduce the fidelity of debug information.
+Inlining and tail calls are enabled, meaning backtraces might not give the stack of open function 
+activations which might be expected from reading the source.
+If the result is not needed, a function with no side-effects might not be called in the expected place, 
+or might be omitted.
+Values of variables might not be available within their scope after they are no longer used. 
+
+For example, their stack location might have been reused.
+
+Optimization level -O2
+=======================
+-O2 is a higher optimization for performance compared to -O1. It adds few new optimizations, 
+and changes the heuristics for optimizations compared to -O1. This level is the 
+first optimization level at which the compiler might automatically generate vector instructions. 
+It also degrades the debug experience, and might result in an increased code size compared to -O1.
+
+The differences when using -O2 as compared to -O1 are:
+=========================================================
+
+The threshold at which the compiler believes that it is profitable to inline a call site might increase.
+The amount of loop unrolling that is performed might increase.
+Vector instructions might be generated for simple loops and for correlated 
+sequences of independent scalar operations.
+The creation of vector instructions can be inhibited with the armclang command-line 
+option -fno-vectorize.
+
+Optimization level -O3
+=======================
+-O3 is a higher optimization for performance compared to -O2. 
+This optimization level enables optimizations that require significant compile-time analysis and 
+resources, and changes the heuristics for optimizations compared to -O2. 
+-O3 instructs the compiler to optimize for the performance of generated code and 
+disregard the size of the generated code, which might result in an increased code size. 
+It also degrades the debug experience compared to -O2.
+
+The differences when using -O3 as compared to -O2 are:
+=======================================================
+
+The threshold at which the compiler believes that it is profitable to inline a call site increases.
+The amount of loop unrolling that is performed is increased.
+More aggressive instruction optimizations are enabled late in the compiler pipeline.
+
+Optimization level -Os
+======================
+-Os aims to provide high performance without a significant increase in code size. 
+Depending on your application, the performance provided by -Os might be similar to -O2 or -O3.
+
+-Os provides code size reduction compared to -O3. It also degrades the debug experience compared to -O1.
+
+The differences when using -Os as compared to -O3 are:
+
+The threshold at which the compiler believes it is profitable to inline a call site is lowered.
+The amount of loop unrolling that is performed is significantly lowered.
+
+Optimization level -Oz
+----------------------
+-Oz aims to provide reduced code size without using Link-Time Optimization (LTO). 
+Arm recommends this option for best code size if LTO is not appropriate for your application. 
+This optimization level degrades the debug experience compared to -O1.
+
+The differences when using -Oz as compared to -Os are:
+=======================================================
+
+Instructs the compiler to optimize for code size only and disregard the performance optimizations, 
+which might result in slower code.
+Function inlining is not disabled. There are instances where inlining might reduce code size overall, 
+for example if a function is called only once. The inlining heuristics are tuned to inline 
+only when code size is expected to decrease as a result.
+Optimizations that might increase code size, such as Loop unrolling and loop vectorization are disabled.
+
+Loops are generated as while loops instead of do-while loops.
+
+Optimization level -Omin
+-------------------------
+-Omin aims to provide the smallest possible code size. Arm recommends this option for best code size. 
+This optimization level degrades the debug experience compared to -O1.
+
+The differences when using -Omin as compared to -Oz are:
+=====================================================
+
+-Omin enables a basic set of Link-Time Optimizations (LTO) aimed at removing unused code and data, 
+while also trying to optimize global memory accesses.
+-Omin enables virtual function elimination, which is a particular benefit to C++ users.
+If you want to compile at -Omin and use separate compile and link steps, 
+hen you must also include -Omin on your armlink command line.
+
+Optimization level -Ofast
+========================
+-Ofast performs optimizations from level -O3, including those optimizations performed with the 
+-ffast-math armclang option.
+
+This level also performs other aggressive optimizations that might violate strict compliance with 
+language standards.
+
+This level degrades the debug experience, and might result in increased code size compared to -O3.
+
+Optimization level -Omax
+-Omax performs maximum optimization, and specifically targets performance optimization. 
+It enables all the optimizations from level -Ofast, together with Link-Time Optimization (LTO).
+
+At this optimization level, Arm Compiler might violate strict compliance with language standards.
+ Use this optimization level for the fastest performance.
+
+This level degrades the debug experience, and might result in increased code size compared to -Ofast.
+
+If you want to compile at -Omax and have separate compile and link steps, then you must also include 
+-Omax on your armlink command line.
+
+
+
+Examples
+The example shows the code generation when using the -O0 optimization option. 
+To perform this optimization, compile your source file using:
+
+armclang --target=arm-arm-none-eabi -march=armv7-a -O0 -S file.c
+Table 3-9 Example code generation with -O0
+
+Source code in file.c	Unoptimized output from armclang
+int dummy()
+{
+    int x=10, y=20;
+    int z;
+    z=x+y;
+    return 0;
+}
+dummy:
+    .fnstart
+    .pad #12
+     sub     sp, sp, #12
+     mov     r0, #10
+     str     r0, [sp, #8]
+     mov     r0, #20
+     str     r0, [sp, #4]
+     ldr     r0, [sp, #8]
+     add     r0, r0, #20
+     str     r0, [sp]
+     mov     r0, #0
+     add     sp, sp, #12
+     bx	 lr
+The example shows the code generation when using the -O1 optimization option. 
+To perform this optimization, compile your source file using:
+
+armclang --target=arm-arm-none-eabi -march=armv7-a -O1 -S file.c
+Table 3-10 Example code generation with -O1
+
+Source code in file.c	Optimized output from armclang
+int dummy()
+{
+    int x=10, y=20;
+    int z;
+    z=x+y;
+    return 0;
+}
+dummy:
+    .fnstart
+    movs r0, #0
+    bx lr
+The source file contains mostly dead code, such as int x=10 and z=x+y. At optimization level -O0, 
+the compiler performs no optimization, and therefore generates code for the dead code in the source file.
+However, at optimization level -O1, the compiler does not generate code for the dead code in the source 
+file.
+
+
