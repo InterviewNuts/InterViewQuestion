@@ -21,6 +21,23 @@ The best optimization level for your application depends on your application and
 |Balanced code size reduction and fast performance		  |-Os						       |				
 |==========================================================================================|
 
+GNU Compiler Collection (GCC)
+=====================================
+-o file Place output in file 'file'.
+-c Compile or assemble the source files, but do not link.
+-fopenmp Enable handling of the OpenMP directives.
+-g Produce debugging information in the operating systems native format.
+-O or -O1 Optimize. The compiler tried to reduce code size and execution time. 
+-O2 Optimize even more. GCC performs nearly all supported optimizations that do not involve a space-speed tradeoff. 
+-O3 Optimize even more. The compiler will also do loop unrolling and function inlining. RECOMMENDED
+-O0 Do not optimize. This is the default.
+-Os Optimize for size.
+-Ofast Disregard strict standards compliance. -Ofast enables all -O3 optimizations. It also enables optimizations that are not valid for all standard-compliant programs. It turns on -ffast-math and the Fortran-specific -fno-protect-parens and -fstack-arrays.
+-ffast-math Sets the options -fno-math-errno, -funsafe-math-optimizations, -ffinite-math-only, -fno-rounding-math, -fno-signaling-nans and -fcx-limited-range.
+-l library Search the library named 'library' when linking.
+
+------------------------------------------------------------------------------------------------------
+
 
 If you use a higher optimization level for performance, it has a higher impact on the other goals 
 such as degraded debug experience, increased code size, and increased build time.
