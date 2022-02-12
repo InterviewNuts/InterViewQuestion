@@ -42,6 +42,14 @@ int main ()
 }
 
 
+if you compile program with g++ *.cpp -O3
+then you  will see compile time / build time increases and code size increases but
+run time performance is increased.
+Because O3 flag removes the recurasion call & do the optimisation ,
+You can check it by using -S flag.
+
+I have checked in all these exe as well , It increases the size if we use O3 flagg.
+
  */
 #include<iostream>
 using namespace std;
