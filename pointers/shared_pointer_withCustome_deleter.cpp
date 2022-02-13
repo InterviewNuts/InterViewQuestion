@@ -20,11 +20,19 @@ void show(shared_ptr<Demo> d)
 {
     cout << "User count in show () =" << d.use_count() << "\n";;
 }
-
+void demo_deleter(Demo* d)
+{
+    if (d)
+    {
+        delete d;
+        d = nullptr;
+        cout << " Custom Deleter called \n";
+    }
+}
 int main()
 {
     Demo* dp = new Demo();
-    shared_ptr<Demo> ds = shared_ptr<Demo>(dp);
+    shared_ptr<Demo> ds = shared_ptr<Demo>(dp, demo_deleter);
     cout << "User cound =" << ds.use_count() << "\n";
     // show(ds);
     {
