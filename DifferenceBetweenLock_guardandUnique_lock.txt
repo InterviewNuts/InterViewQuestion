@@ -1,0 +1,58 @@
+Difference between std::lock_guard and std::unique_lock
+----------------------------------------------------------
+One way of preventing data races between the threads is to use mutexes.
+
+A mutex is usually associated with a resource. The thread, which locks the mutex, 
+has granted access to the resource. No other thread can then lock the mutex because 
+it is already locked. Consequently, no other thread has an access 
+to the resource guarded by the locked mutex. This is the mutual exclusion: 
+only one thread has access to the resource at any given time.
+
+One of the differences between std::lock_guard and std::unique_lock is that the programmer 
+is able to unlock std::unique_lock, but she/he is not able to unlock std::lock_guard. 
+Let’s explain it in more detail
+
+std::lock_guard
+If you have an object
+
+std::lock_guard guard1(mutex);
+then the constructor of guard1 locks the mutex. At the end of guard1’s life, 
+the destructor unlocks the mutex. There is no other possibility. 
+In fact, the std::lock_guard class doesn’t have any other member function.'
+
+std::unique_lock
+================
+On the other hand, we have an object of std::unique_lock.
+
+std::unique_lock guard2(mutex);
+There are similarities with std::lock_guard class. The constructor of guard2 also locks the mutex and 
+the destructor of guard2 also unlocks the mutex. But the std::unique_lock has additional functionalities.
+
+The programmer is able to unlock the mutex with the help of the guard object
+
+guard2.unlock();
+This means that the programmer can unlock the mutex before the guard2’s life ends. 
+After the mutex was unlocked, the programmer can also lock it again
+
+guard2.lock();
+We should mention that the std::unique_lock has also some other member functions. 
+You can look it up here.
+
+
+
+A lock_guard always holds a lock from its construction to its destruction. 
+A unique_lock can be created without immediately locking, can unlock at any point in its existence, 
+and can transfer ownership of the lock from one instance to another.
+
+
+When to use std::lock_guard ?
+The std::unique_lock has all of the functionalities of the std::lock_guard. Everything which is 
+possible to do with std::lock_guard is also possible to do with std::unique_lock. 
+So, when should we use std::lock_guard?
+
+The rule of thumb is to always use std::lock_guard. But if we need some higher level functionalities, 
+which are available by std::unique_lock, then we should use the std::unique_lock.
+
+Summary
+We learned the differences between the std::lock_guard and the std::unique_lock. 
+We also listed some situations where we should use the std::unique_loc
