@@ -1,0 +1,74 @@
+Mutex
+Mutex or Mutual Exclusion Object is used to give access to a resource to only one process at a time. 
+The mutex object allows all the processes to use the same resource but at a time, 
+only one process is allowed to use the resource. 
+Mutex uses the lock-based technique to handle the critical section problem.
+
+Whenever a process requests for a resource from the system, then the system will create a mutex object 
+with a unique name or ID. So, whenever the process wants to use that resource, 
+then the process occupies a lock on the object. After locking, the process uses the resource and 
+finally releases the mutex object. After that, other processes can create the mutex object 
+in the same manner and use it.
+
+By locking the object, that particular resource is allocated to that particular process and 
+no other process can take that resource. So, in the critical section, no other processes are 
+allowed to use the shared resource. In this way, the process synchronization can be achieved 
+with the help of a mutex object.
+
+Semaphore
+Semaphore is an integer variable S, that is initialized with the number of resources present in the 
+system and is used for process synchronization.
+
+There are two categories of semaphores i.e. Counting semaphores and Binary semaphores.
+
+A mutex object allows multiple process threads to access a single shared resource but only one at a time. 
+On the other hand, semaphore allows multiple process threads to access the finite instance of 
+the resource until available.
+
+In mutex, the lock can be acquired and released by the same process at a time. 
+But the value of the semaphore variable can be modified by any process that needs some resource but 
+only one process can change the value at a time.
+
+
+Strictly speaking, a mutex is a locking mechanism used to synchronize access to a resource. 
+Only one task (can be a thread or process based on OS abstraction) can acquire the mutex. 
+It means there is ownership associated with a mutex, and only the owner can release the lock (mutex)
+
+Semaphore is signaling mechanism (“I am done, you can carry on” kind of signal). 
+For example, if you are listening to songs (assume it as one task) on your mobile phone and at the same 
+time, your friend calls you, an interrupt is triggered upon which an interrupt service routine (ISR) 
+signals the call processing task to wakeup. 
+
+A mutex can be released only by the thread that had acquired it.
+A binary semaphore can be signaled by any thread (or process).
+
+so semaphores are more suitable for some synchronization problems like producer-consumer.
+
+On Windows, binary semaphores are more like event objects than mutexes.
+
+Difference between binary semaphore and mutex :
+
+Binary Semaphore									Mutex
+=======================================================================================================
+Its functions based up on signalling mechanism	 | Its functions based up on locking mechanism
+------------------------------------------------------------------------------------------------------------------												 |
+The thread which is having higher priority than  | The thread which has acquired mutex can only  
+current thread can also release binary semaphore | release Mutex when it exits from critical section.
+and take lock.                                   |
+-----------------------------------------------------------------------------------------------------------------------------------------												 |
+Semaphore value is changed according to wait ()  | Mutex values can be modified just as locked or unlocked.
+and signal () operations.                        |
+--------------------------------------------------------------------------------------------------------------------												 |
+Multiple number of threads can acquire binary    | Only one thread can acquire mutex at a time
+semaphore at a time concurrently.                |
+---------------------------------------------------------------------------------------------------------------------												 |
+Binary semaphore have no ownership.	             | There is ownership associated with mutex 
+												 | because only owner can release the lock.                                              
+----------------------------------------------------------------------------------------------------------------------------------------------------												 |
+semaphore are faster than mutex because any      | They are slower than binary semaphores because 
+other thread/process can unlock binary semaphore.| only thread which has acquired must release the lock.
+												 |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------												 |
+If you have number of instances for resource it  |If you have single instance for resource 
+is better to use Binary semaphore.               | it is better to use mutex.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
