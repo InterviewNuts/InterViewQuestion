@@ -30,7 +30,7 @@ int main() {
     }();
 
     //! [m] denotes,   can access only m not n variable
-    [m]() -> void
+    [m() -> void
     {
         //! lambda.cpp:35:50: error: 'n' is not captured , so wee need to  capture it 
         cout << "1::  M = " << m << "\n n = " << n << "\n";

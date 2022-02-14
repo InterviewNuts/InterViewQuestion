@@ -1,0 +1,326 @@
+What is lvalue ?
+lvalue is anything whose address is accessible. It means we can take address of lvalue using & operator.  
+
+int x = 1;
+
+In above expression, x is an lvalue because we can access the address of x i.e.
+int * ptr = &x;
+
+Example 2:
+int z = x + 1;
+
+In above expression, we can take address of z i.e.
+int * ptr2 = &z;
+
+Therefore, z is lvalue. But we cannot take the  address of  x+1 i.e.
+Int * ptr3 = &(x+1); // Compile Error
+
+Above line will not compile because we are trying to address of (x+1) and (x+1) doesn’t persist 
+after single expression. As, we cannot take the address of (x+1). So, (x+1) is not an lvalue. 
+So, what the heck is this (x+1) ?
+As, lvalue is something whose address is accessible using & operator.
+ 
+But in this case, it’s not possible to access the address of (x+2). 
+So, (x+2) is something that is not lvalue and that is exactly what rvalue is. (x+2) here is rvalue.
+
+What is rvalue ?
+Rvalue is anything that is not lvalue. It means we cannot take address of rvalue and it also don’t 
+persist beyond the single expression.  
+
+Checkout some examples,
+
+Example 3:
+int x = 1;
+
+Here you can not take the address of 1 i.e.
+int * ptr = &(1); // Compile Error
+
+Therefore, 1 is not a lvalue and hence it 1 is rvalue.
+Example 4:
+int a = x+1;
+
+We cannot take the  address of  x+1 i.e.
+int * ptr3 = &(x+1); // Compile Error
+
+Hence (x+1) is not a lvalue and hence (x+1) is rvalue.
+Lets look into some expression and find out what is lvalue and what is rvalue,
+
+ 
+int a = 7; // a is lvalue & 7 is rvalue
+int b = (a + 2); // b is lvalue & (a+2) is rvalue
+int c = (a + b) ; // c is lvalue & (a+b) is rvalue
+int * ptr = &a; // Possible to take address of lvalue
+//int * ptr3 = &(a + 1);  // Compile Error. Can not take address of rvalue
+
+Now, lets create a function that returns a integer i.e
+int getData()
+{
+    int data = 0;
+    return data;
+}
+
+Here, the value retutned by getData() is temporary i.e. it will not persist beyond the expression 
+where it is called. Therefore it will get copied. Therefore, we can not take the 
+address of temporary value returned by getData() i.e.
+int * ptr = &getData(); // Compile error - Cannot take address of rvalue
+
+Therefore, getData() is a rvalue and we cannot take the address of rvalue.
+
+Is rvalue immutable in C++?
+
+rvalues of builtin data type is Immutable
+We can not modify the rvalue of builtin data type i.e.
+(x+7) = 7; // Compile error - Can not Modify rvalue
+
+int getData();
+
+Here getData() is a rvalue of buildin data type int and if we try to modify it then 
+it will result in compile error i.e
+getData() = 9; // Compile Error - Can not modify rvalue
+rvalue of User Defined data type is not Immutable
+
+rvalue of User Defined Data type can be modified. 
+But it can be modified in same expression using its own member functions only. Let’s see an example,
+
+Create a User Defined Data Type i.e. a class of Person i.e.
+class Person {
+    int mAge;
+public:
+    Person() {
+        mAge = 10;
+    }
+    void incrementAge()
+    {
+        mAge = mAge + 1;
+    }
+};
+
+It has an incrementAge() member function that modifies it’s state i.e. increments mAge data member. 
+Now create a function that will return Person’s object as a rvalue i.e.
+Person getPerson()
+{
+    return Person();
+}
+
+Now getPerson() is a rvalue and we can not take its address i.e.
+Person * personPtr = &getPerson(); // COMPILE ERROR
+
+But we can modify this rvalue because it is of User Defined Data type (of Person class) i.e.
+getPerson().incrementAge();
+#include <iostream>
+class Person {
+    int mAge;
+public:
+    Person() {
+        mAge = 10;
+    }
+    void incrementAge()
+    {
+        mAge = mAge + 1;
+    }
+};
+Person getPerson()
+{
+    return Person();
+}
+int main() {
+//    Person * personPtr = &getPerson();
+    getPerson().incrementAge();
+    return 0;
+}
+
+C++11 Move Contsructor & rvalue References
+===========================================
+
+Problem of Temporary Objects
+The Idea behind this move semantics is to reduce the load of these temporary objects on memory. 
+Every time we return a object from a function then a temporary object is created, which eventually 
+get copied. In then end we create 2 copies of an object whereas, we need only one. 
+Let’s understand by an example
+
+class Container {
+    int * m_Data;
+public:
+    Container() {
+        //Allocate an array of 20 int on heap
+        m_Data = new int[20];
+        std::cout << "Constructor: Allocation 20 int" << std::endl;
+    }
+    ~Container() {
+        if (m_Data) {
+            delete[] m_Data;
+            m_Data = NULL;
+        }
+    }
+    Container(const Container & obj) {
+        //Allocate an array of 20 int on heap
+        m_Data = new int[20];
+        //Copy the data from passed object
+        for (int i = 0; i < 20; i++)
+            m_Data[i] = obj.m_Data[i];
+        std::cout << "Copy Constructor: Allocation 20 int" << std::endl;
+    }
+};
+
+When we create an object of Container class, then its default constructor internally allocates 
+an array of 20 int on heap and assign it to its member variable.
+Similarly, Container class’s copy constructor allocates an array of 20 int on heap, 
+then copy the contents of passed objects array into it and then assign it to its member variable.
+
+Now in main function we created a vector of Container type and inserted an object returned by 
+getContainer() function i.e.
+int main() {
+    // Create a vector of Container Type
+    std::vector<Container> vecOfContainers;
+    //Add object returned by function into the vector
+    vecOfContainers.push_back(getContainer());
+    return 0;
+}
+
+Now, at last there is one object in the vector  vecOfContainers. But we actually created 2 objects for it because getContainer() function returned a temporary object which got copied into a new object and then destructed. This 2nd object got inserted in vector. So, 2 objects of class Container are created at following step in above code,
+One inside the getContainer() function using Container class’s default constructor
+Second while adding object in vector using Container class’ copy constructor.
+
+Solving Problem of Temporary Objects using rvalue references & Move Constructor
+The getContainer() function here is a rvalue, so it can be referred by a rvalue reference. 
+Also, using rvalue reference we can also overload functions. This time, we will overload the Constructor 
+of class Container and this new Constructor will be called move constructor.
+
+Move Constructor
+Move constructor takes a rvalue reference as an argument and that makes it overloaded because 
+Copy Constructor takes the const lvalue reference as an argument. 
+In Move constructor we just move the member variables of passed object into the new object’s member 
+variables, instead of allocating new memory for them.
+
+Container(Container && obj)
+{
+    // Just copy the pointer
+    m_Data = obj.m_Data;
+    // Set the passed object's member to NULL
+    obj.m_Data = NULL;
+    std::cout<<"Move Constructor"<<std::endl;
+}
+#include <iostream>
+#include <vector>
+class Container {
+    int * m_Data;
+public:
+    Container() {
+        //Allocate an array of 20 int on heap
+        m_Data = new int[20];
+        std::cout << "Constructor: Allocation 20 int" << std::endl;
+    }
+    ~Container() {
+        if (m_Data) {
+            delete[] m_Data;
+            m_Data = NULL;
+        }
+    }
+    //Copy Constructor
+    Container(const Container & obj) {
+        //Allocate an array of 20 int on heap
+        m_Data = new int[20];
+        //Copy the data from passed object
+        for (int i = 0; i < 20; i++)
+            m_Data[i] = obj.m_Data[i];
+        std::cout << "Copy Constructor: Allocation 20 int" << std::endl;
+    }
+    //Assignment Operator
+    Container & operator=(const Container & obj) {
+        if(this != &obj)
+        {
+            //Allocate an array of 20 int on heap
+            m_Data = new int[20];
+            //Copy the data from passed object
+            for (int i = 0; i < 20; i++)
+                m_Data[i] = obj.m_Data[i];
+            std::cout << "Assigment Operator: Allocation 20 int" << std::endl;
+        }
+    }
+    // Move Constructor
+    Container(Container && obj)
+    {
+        // Just copy the pointer
+        m_Data = obj.m_Data;
+        // Set the passed object's member to NULL
+        obj.m_Data = NULL;
+        std::cout<<"Move Constructor"<<std::endl;
+    }
+    // Move Assignment Operator
+    Container& operator=(Container && obj)
+    {
+        if(this != &obj)
+        {
+            // Just copy the pointer
+            m_Data = obj.m_Data;
+            // Set the passed object's member to NULL
+            obj.m_Data = NULL;
+            std::cout<<"Move Assignment Operator"<<std::endl;
+        }
+    }
+};
+// Create am object of Container and return
+Container getContainer()
+{
+    Container obj;
+    return obj;
+}
+int main() {
+    // Create a vector of Container Type
+    std::vector<Container> vecOfContainers;
+    //Add object returned by function into the vector
+    vecOfContainers.push_back(getContainer());
+    Container obj;
+    obj = getContainer();
+    return 0;
+}
+
+Variadic Template.
+---------------------
+we need to create a function that accepts,  variable number of template parameters. This feature is 
+Variadic Template.
+template<typename T, typename ... Args>
+void log(T first, Args ... args);
+
+
+The above function can take 1 or more arguments. Here, Args… represents variable number of template 
+parameters.
+Declaring a vardiac template function is easy but its definition is little tricky. 
+We cann’t access the the passed variable number of arguments directly. 
+We need to use the c++ type deduction mechanism & recursion to achieve this. 
+Let’s define the variadic function i.e.
+
+/*
+ * Variadic Template Function that accepts variable number
+ * of arguments of any type.
+ */
+template<typename T, typename ... Args>
+void log(T first, Args ... args) {
+    // Print the First Element
+    std::cout<<first<<" , ";
+    // Forward the remaining arguments
+    log(args ...);
+}
+
+
+#include <iostream>
+// Function that accepts no parameter
+// It is to break the recursion chain of vardiac template function
+void log()
+{
+}
+/*
+ * Variadic Template Function that accepts variable number
+ * of arguments of any type.
+ */
+template<typename T, typename ... Args>
+void log(T first, Args ... args) {
+    // Print the First Element
+    std::cout<<first<<" , ";
+    // Forward the remaining arguments
+    log(args ...);
+}
+int main() {
+    log(2, 3.4, "aaa");
+    return 0;
+}
